@@ -23,6 +23,16 @@ export class DataBaseError extends CustomError {
     }
 }
 
+export class AuthError extends CustomError {
+    constructor(message, statusCode, details) {
+        super(
+            message || 'Error en el proceso de autenticación',
+            statusCode || 500,
+            details
+        );
+    }
+}
+ 
 export class InternalServerError extends CustomError {
     constructor(message, statusCode, details) {
         super(message || 'Error interno del Servidor', statusCode || 500, details);

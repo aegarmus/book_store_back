@@ -37,3 +37,16 @@ export const normalizeUserData = (email, password, generalData = {}) => {
         ...generalData
     };
 };
+
+
+export const normalizeUserPrivateData = (user) => {
+    const { id, nombre, apellido_paterno, apellido_materno, email } = user;
+
+    return {
+        id,
+        nombre,
+        apellido_paterno,
+        apellido_materno,
+        email
+    };
+};

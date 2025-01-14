@@ -1,4 +1,4 @@
-import { destructuringUserData, normalizeUserData } from '../../utils/normalize/user,js';
+import { destructuringUserData, normalizeUserData } from '../../utils/normalize/user.js';
 import { ensureEmailNotTaken } from '../../utils/validators/models.js';
 import { hashPassword } from './password/hash.service.js';
 import { validatePassword } from '../../utils/validators/password.js';

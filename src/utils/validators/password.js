@@ -12,7 +12,7 @@ Que no sea tu cumpleaños
 que no contenga letras consecutivas en secuencia ascendente
 */
 
-import { ValidateError } from '../../errors/TypeError.js';
+import { AuthError, ValidateError } from '../../errors/TypeError.js';
 
 export const validatePassword = (password, birthday) => {
     if(password.length < 8) {
@@ -56,4 +56,9 @@ export const validatePassword = (password, birthday) => {
     }
 
     return true;
+};
+
+
+export const isNotMatchedPassword = (matchResult) => {
+    if(!matchResult) throw new AuthError('Credenciales inválidas');
 };

@@ -1,5 +1,6 @@
-import { registerService } from '../services/auth/registerService';
+import { registerService } from '../services/auth/registerService.js';
 import { Usuario } from '../models/Usuario.model.js';
+import { loginService } from '../services/auth/login.service.js';
 
 export const register = async(req, res, next) => {
     try {
@@ -18,8 +19,15 @@ export const register = async(req, res, next) => {
 
 export const login = async(req, res, next) => {
     try {
-        
+        const { user, token } = await loginService(req.body);
+
+        res.status(202).json({
+            message: 'Usuario autetnicado con éxito',
+            status: 202,
+            data: { user, token }
+        });
     } catch (error) {
-        
+        console.error(error);
+        next(error);
     }
 };
