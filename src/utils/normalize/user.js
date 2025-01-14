@@ -30,7 +30,7 @@ export const destructuringUserData = (data) => {
 };
 
 
-export const normalizeUserData = (email, password, ...generalData) => {
+export const normalizeUserData = (email, password, generalData = {}) => {
     return {
         email, 
         password,
