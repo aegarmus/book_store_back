@@ -8,7 +8,7 @@ import { config } from '../../config/env.config.js';
 import { normalizeUserPrivateData } from '../../utils/normalize/user.js';
 import { AuthError } from '../../errors/TypeError.js';
 
-const { secretKey } = config.secretKey;
+const { secretKey } = config;
 
 export const loginService = async({ email, password }) => {
 
@@ -20,7 +20,7 @@ export const loginService = async({ email, password }) => {
 
         const privateUser = normalizeUserPrivateData(user);
         const token = jwt.sign(
-            { uid: user.id, email: user.email }, 
+            { id: user.id, email: user.email }, 
             secretKey,
             { expiresIn: '1h' }
         );
