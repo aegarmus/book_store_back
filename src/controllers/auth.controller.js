@@ -1,4 +1,4 @@
-import { registerService } from '../services/auth/registerService.js';
+import { registerService } from '../services/auth/register.service.js';
 import { Usuario } from '../models/Usuario.model.js';
 import { loginService } from '../services/auth/login.service.js';
 

@@ -3,25 +3,24 @@ import jwt from 'jsonwebtoken';
 import { Usuario } from '../../models/Usuario.model.js';
 import { isNotFound } from '../../utils/validators/general.js';
 import { isNotMatchedPassword } from '../../utils/validators/password.js';
-import { comparePassword } from './password/hash.service.js';
+import { comparePassword } from './hash.service.js';
 import { config } from '../../config/env.config.js';
 import { normalizeUserPrivateData } from '../../utils/normalize/user.js';
 import { AuthError } from '../../errors/TypeError.js';
 
-const secretKey = config.secretKey;
+const { secretKey } = config.secretKey;
 
 export const loginService = async({ email, password }) => {
 
     try {
         const user = await Usuario.findOne({ where: { email } });
-        console.log(user);
         isNotFound(user);
         const passwordMatch = await comparePassword(password, user.password);
         isNotMatchedPassword(passwordMatch);
 
         const privateUser = normalizeUserPrivateData(user);
         const token = jwt.sign(
-            { uid: user.id, email: user.email}, 
+            { uid: user.id, email: user.email }, 
             secretKey,
             { expiresIn: '1h' }
         );

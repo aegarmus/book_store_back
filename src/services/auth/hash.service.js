@@ -1,5 +1,5 @@
 import * as bcrypt from 'bcrypt';
-import { InternalServerError } from '../../../errors/TypeError.js';
+import { InternalServerError } from '../../errors/TypeError.js';
 
 const SALT_ROUND = 10;
 
