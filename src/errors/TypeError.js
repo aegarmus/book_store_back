@@ -32,6 +32,17 @@ export class AuthError extends CustomError {
         );
     }
 }
+
+
+export class MailServiceError extends CustomError {
+    constructor(message, statusCode, details) {
+        super(
+            message || 'Error en el servicio de mensajería por correo',
+            statusCode || 500,
+            details
+        );
+    }
+}
  
 export class InternalServerError extends CustomError {
     constructor(message, statusCode, details) {
