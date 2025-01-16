@@ -13,6 +13,7 @@ que no contenga letras consecutivas en secuencia ascendente
 */
 
 import { AuthError, ValidateError } from '../../errors/TypeError.js';
+import { comparePassword } from '../../services/auth/hash.service.js';
 
 export const validatePassword = (password, birthday) => {
     if(password.length < 8) {
@@ -62,3 +63,20 @@ export const validatePassword = (password, birthday) => {
 export const isNotMatchedPassword = (matchResult) => {
     if(!matchResult) throw new AuthError('Credenciales inválidas');
 };
+
+
+export const isEqualPassword = async(newPassword, oldPassword) => {
+    try {
+        const matchPassword = await comparePassword(newPassword, oldPassword);
+        console.log(matchPassword);
+        console.log('New Password: ', newPassword);
+        
+        if(matchPassword) throw new AuthError(
+            'La nueva contraseña no debe coincidir con la anterior',
+            500,
+            'La contraseña que estas entregando es identica a la contraseña que intentas restablecer'
+        );
+    } catch (error) {
+        throw new AuthError('Error al comparar las contraseñas', 500, error);
+    }
+}

@@ -1,8 +1,10 @@
 import crypto from 'crypto';
+import { Op } from 'sequelize';
+
 import { AuthError } from '../../errors/TypeError.js';
 import { Usuario } from '../../models/Usuario.model.js';
 import { isNotFound } from '../../utils/validators/general.js';
-import { isNotMatchedPassword } from '../../utils/validators/password.js';
+import { isEqualPassword, isNotMatchedPassword, validatePassword } from '../../utils/validators/password.js';
 import { comparePassword, hashPassword } from './hash.service.js';
 import { buildResetUrl } from '../../utils/normalize/buildReset.js';
 import { sendMailService } from '../mails/sendMail.service.js';
@@ -30,15 +32,15 @@ export const updateUserPasswordWithPassword = async(id, { oldPassword, newPasswo
 
 export const forgotPasswordService = async({ email }) => {
     try {
-        console.log(email);
+
         const user = await Usuario.findOne({ where: { email }});
-        console.log(user);
+     
 
         const token = crypto.randomBytes(20).toString('hex'); //Token Aleatorio
         const expiresIn = Date.now() + 300000; //5minutos desde el presente
 
         user.resetPasswordToken = token;
-        user.resetPasswordExpires = expiresIn;
+        user.resetPasswordExpire = expiresIn;
 
         await user.save();
 
@@ -52,7 +54,7 @@ export const forgotPasswordService = async({ email }) => {
                     <a href="${resetUrl}">Restablecer Contraseña Aquí</a>`
         });
 
-        return 'Email de restablecimiento enviado';
+        return user;
 
     } catch (error) {
         throw new AuthError(
@@ -63,4 +65,33 @@ export const forgotPasswordService = async({ email }) => {
     }
 };
 
+
+export const resetPasswordService = async(token, newPassword) => {
+    try {
+        const user = await Usuario.findOne({
+            where: {
+                resetPasswordToken: token,
+                resetPasswordExpire: { [Op.gt]: Date.now()}
+            }
+        });
+        console.log(user);
+
+        isNotFound(user);
+        validatePassword(newPassword, user.fecha_nacimiento);
+        await isEqualPassword(newPassword, user.password);
+
+        const hashedPassword = await hashPassword(newPassword);
+
+        user.password = hashedPassword;
+        user.resetPasswordToken = null;
+        user.resetPasswordExpire = null;
+
+        await user.save();
+
+        return 'Contraseña reestablecida con éxito';
+    } catch (error) {
+        console.error(error);
+        throw new AuthError('Error al restablecer la contraseña', 500, error);
+    }
+};
 
