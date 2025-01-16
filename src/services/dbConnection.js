@@ -7,7 +7,7 @@ export const dbConnect = async() => {
         await dbConfig.authenticate();
         //En este punto inicializa los modelos y configura las asociaciones
         initUsuario(dbConfig);
-        await dbConfig.sync(/* {  alter: true  } */); //Habilita alter true para modificar las tablas con cada carga del servidor
+        await dbConfig.sync({  alter: true  }); //Habilita alter true para modificar las tablas con cada carga del servidor
 
         console.log('Logramos conectarnos a postre a traves de Sequelize');
     } catch (error) {

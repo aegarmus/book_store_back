@@ -2,7 +2,7 @@ import { registerService } from '../services/auth/register.service.js';
 import { Usuario } from '../models/Usuario.model.js';
 import { loginService } from '../services/auth/login.service.js';
 import { AuthError } from '../errors/TypeError.js';
-import { updateUserPasswordWithPassword } from '../services/auth/updatePasswrod.service.js';
+import { updateUserPasswordWithPassword, forgotPasswordService } from '../services/auth/updatePasswrod.service.js';
 
 
 export const register = async(req, res, next) => {
@@ -58,3 +58,16 @@ export const updatePassword = async(req, res, next) => {
         next(error);
     }
 }; 
+
+export const forgotPassword = async(req, res, next) => {
+    try {
+        /* const email = req.body.email; */
+        
+        const result = await forgotPasswordService(req.body);
+
+        res.status(200).json({message: result, status: 200});
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+};

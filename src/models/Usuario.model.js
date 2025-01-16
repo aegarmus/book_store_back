@@ -85,6 +85,12 @@ export const initUsuario = (dbConfig) => {
                 type: DataTypes.BOOLEAN,
                 allowNull: false,
                 defaultValue: false
+            },
+            resetPasswordToken: {
+                type: DataTypes.STRING
+            },
+            resetPasswordExpire: {
+                type: DataTypes.DATE
             }
         },
         {
