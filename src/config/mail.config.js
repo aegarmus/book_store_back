@@ -14,4 +14,4 @@ export const verifyConnectionMail = async() => {
         console.error(error);
         throw new MailServiceError('Error al conectar con el servidor de correo', 500, error);
     }
-}
+};
