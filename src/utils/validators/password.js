@@ -79,4 +79,4 @@ export const isEqualPassword = async(newPassword, oldPassword) => {
     } catch (error) {
         throw new AuthError('Error al comparar las contraseñas', 500, error);
     }
-}
+};

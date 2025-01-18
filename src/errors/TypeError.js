@@ -43,6 +43,16 @@ export class MailServiceError extends CustomError {
         );
     }
 }
+
+export class UploadFileError extends CustomError {
+    constructor(message, statusCode, details) {
+        super(
+            message || 'Error al subir el archivo al servidor',
+            statusCode || 500,
+            details
+        );
+    }
+}
  
 export class InternalServerError extends CustomError {
     constructor(message, statusCode, details) {
