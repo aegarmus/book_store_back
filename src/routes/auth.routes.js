@@ -11,6 +11,6 @@ router.post('/usuario/login', login);
 router.patch('/usuario/:id', authMiddleware, updatePassword);
 router.post('/forgot-password', forgotPassword);
 router.post('/reset-password', resetPassword);
-router.get('/usuario', authMiddleware, getAllUsers);
+router.get('/usuario', getAllUsers);
 
 export default router;

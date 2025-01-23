@@ -12,6 +12,8 @@ export const createBook = async(req, res, next) => {
             image: imagePath, 
             ...resto
         };
+
+        console.log(bookData);
         
         const newBook = await Libro.create(bookData);
 
